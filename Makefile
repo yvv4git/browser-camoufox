@@ -1,6 +1,9 @@
 compose_up:
 	docker compose up -d
 
+compose_up_vnc:
+	ENABLE_VNC=1 docker compose up -d
+
 compose_down:
 	docker compose down
 

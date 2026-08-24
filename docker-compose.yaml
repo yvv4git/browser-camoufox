@@ -4,11 +4,15 @@ services:
     container_name: browser-camoufox
     ports:
       - "9377:9377"
+      - "6080:6080"
     environment:
       - "PROXY_HOST=host.docker.internal"
       - "PROXY_PORT=8138"
       - "PROXY_SCHEME=http"
       - "MAX_OLD_SPACE_SIZE=${MAX_OLD_SPACE_SIZE:-128}"
+      - "ENABLE_VNC=${ENABLE_VNC:-0}"
+      - "VNC_PASSWORD=${VNC_PASSWORD:-}"
+      - "VNC_BIND=0.0.0.0"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     shm_size: 2g

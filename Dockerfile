@@ -57,6 +57,8 @@ WORKDIR /app
 
 RUN git clone --depth 1 https://github.com/jo-inc/camofox-browser.git .
 
+COPY camofox.config.json ./
+
 RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci --production && \
     apt-get purge -y --auto-remove build-essential && \
     rm -rf /var/lib/apt/lists/*
@@ -66,6 +68,6 @@ RUN sh scripts/install-plugin-deps.sh
 ENV NODE_ENV=production
 ENV CAMOFOX_PORT=9377
 
-EXPOSE 9377
+EXPOSE 9377 6080
 
 CMD ["sh", "-c", "node --max-old-space-size=${MAX_OLD_SPACE_SIZE:-128} server.js"]
