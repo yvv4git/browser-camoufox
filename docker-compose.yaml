@@ -1,0 +1,20 @@
+services:
+  camoufox:
+    image: yvv4docker/browser-camoufox:latest
+    container_name: browser-camoufox
+    ports:
+      - "9377:9377"
+    environment:
+      - "PROXY_HOST=host.docker.internal"
+      - "PROXY_PORT=8138"
+      - "PROXY_SCHEME=http"
+      - "MAX_OLD_SPACE_SIZE=${MAX_OLD_SPACE_SIZE:-128}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    shm_size: 2g
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
