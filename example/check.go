@@ -4,9 +4,9 @@
 //
 // Run from the repository root:
 //
-//	go run ./examples/html https://www.wikipedia.org
-//	go run ./examples/html -wait 5s https://rutube.ru
-//	go run ./examples/html -addr http://localhost:9377 -wait 20s -session my-session https://example.com
+//	go run check.go https://www.wikipedia.org
+//	go run check.go -wait 5s https://rutube.ru
+//	go run check.go -addr http://localhost:9377 -wait 20s -session my-session https://example.com
 package main
 
 import (
