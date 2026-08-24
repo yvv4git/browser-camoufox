@@ -115,14 +115,14 @@ docker compose down && docker compose up -d
 | -------------------- | ------- | ----------------------------- |
 | `MAX_OLD_SPACE_SIZE` | `128`   | Node.js V8 heap limit (MB)    |
 
-### VNC
+### VNC Settings
 
 | Variable        | Default | Description                           |
 | --------------- | ------- | ------------------------------------- |
 | `ENABLE_VNC`    | `0`     | Enable VNC (`1` to enable)            |
 | `VNC_PASSWORD`  | -       | Password for VNC access               |
 
-### Proxy
+### Proxy Settings
 
 | Variable         | Default | Description                              |
 | ---------------- | ------- | ---------------------------------------- |
