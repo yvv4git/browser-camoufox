@@ -55,7 +55,7 @@ RUN set -eux; \
 
 WORKDIR /app
 
-RUN git clone --depth 1 https://github.com/jo-inc/camofox-browser.git .
+RUN git clone --depth 1 --branch v1.14.0 https://github.com/jo-inc/camofox-browser.git .
 
 COPY camofox.config.json ./
 
