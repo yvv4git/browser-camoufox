@@ -53,6 +53,12 @@ RUN set -eux; \
       -o /usr/local/bin/yt-dlp; \
     chmod 755 /usr/local/bin/yt-dlp
 
+COPY ubo.xpi /tmp/ubo.xpi
+RUN mkdir -p /root/.cache/camoufox/addons/UBO && \
+    unzip -q /tmp/ubo.xpi -d /root/.cache/camoufox/addons/UBO && \
+    rm /tmp/ubo.xpi && \
+    test -f /root/.cache/camoufox/addons/UBO/manifest.json && echo "uBlock Origin installed successfully"
+
 WORKDIR /app
 
 RUN git clone --depth 1 --branch v1.14.0 https://github.com/jo-inc/camofox-browser.git .

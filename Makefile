@@ -1,17 +1,17 @@
-compose_up:
+compose-up:
 	docker compose up -d
 
-compose_down:
+compose-down:
 	docker compose down
 
-image_build:
+image-build:
 	docker build -t yvv4docker/browser-camoufox .
 
-image_push:
+image-push:
 	docker push	yvv4docker/browser-camoufox:latest
 
-image_pull:
+image-pull:
 	docker pull	yvv4docker/browser-camoufox:latest
 
-image_remove:
+image-remove:
 	docker rmi yvv4docker/browser-camoufox:latest
