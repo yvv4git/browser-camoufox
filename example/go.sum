@@ -1,2 +1,4 @@
 github.com/coder/websocket v1.8.15 h1:6B2JPeOGlpff2Uz6vOEH1Vzpi0iUz20A+lPVhPHtNUA=
 github.com/coder/websocket v1.8.15/go.mod h1:NX3SzP+inril6yawo5CQXx8+fk145lPDC6pumgx0mVg=
+github.com/yvv4git/go-juggler v1.0.1 h1:MSlXxwu3O6XDIcJuVtA0J6BLeRVzVA2gyW0CSmeTVzs=
+github.com/yvv4git/go-juggler v1.0.1/go.mod h1:j84IQ6XbFmD6OIAdVR9BdeKy/sl0BtvPYmjpRNfoquc=
