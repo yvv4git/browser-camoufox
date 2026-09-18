@@ -19,6 +19,7 @@ with minimal fingerprinting.
 - [Quick Start](#quick-start)
 - [VNC](#vnc)
 - [Proxy](#proxy)
+- [Examples](#examples)
 - [Makefile](#makefile)
 - [Environment Variables](#environment-variables)
 - [Ports](#ports)
@@ -93,6 +94,32 @@ Restart the container after changes:
 
 ```bash
 docker compose down && docker compose up -d
+```
+
+## Examples
+
+Ready-to-run Go programs in [`example/`](example/) that talk to the
+browser **inside the running container** (HTTP API on port 9377) via the
+[go-juggler](https://github.com/yvv4git/go-juggler) client. None of them
+launch a browser on the host machine.
+
+| Example                                        | Description                                            |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| [basic](example/basic/README.md)               | Full tab lifecycle: health, open, snapshot, close      |
+| [version](example/version/README.md)           | The browser reports its own version and fingerprint    |
+| [html](example/html/README.md)                 | Page HTML before and after dynamic content loads       |
+| [headers](example/headers/README.md)           | Custom HTTP headers sent with navigation               |
+| [inject](example/inject/README.md)             | Evaluating JavaScript inside the page                  |
+| [requests](example/requests/README.md)         | Network requests captured from the Performance API     |
+| [screen](example/screen/README.md)             | Screenshot of the page as a PNG file                   |
+| [tab](example/tab/README.md)                   | Every tab operation: click, type, back, refresh, ...   |
+| [tabs](example/tabs/README.md)                 | Multiple tabs: open, list, close                       |
+
+With the container running, from `example/`:
+
+```bash
+go run ./basic -addr http://localhost:9377
+go run ./version -addr http://localhost:9377
 ```
 
 ## Makefile
