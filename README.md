@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Docker](https://img.shields.io/badge/Docker-Image-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
-[![Camoufox](https://img.shields.io/badge/Camoufox-135.0.1-0098EA?style=flat-square)](https://camoufox.com)
+[![Camoufox](https://img.shields.io/badge/Camoufox-152.0.4-0098EA?style=flat-square)](https://camoufox.com)
 [![Buy me a TON](https://img.shields.io/badge/Buy%20me%20a%20TON-0098EA?style=flat-square)](#support)
 
 Docker image with [Camoufox][camoufox] browser —

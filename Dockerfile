@@ -1,7 +1,7 @@
 FROM node:22-trixie-slim
 
-ARG CAMOUFOX_VERSION=135.0.1
-ARG CAMOUFOX_RELEASE=beta.24
+ARG CAMOUFOX_VERSION=152.0.4
+ARG CAMOUFOX_RELEASE=beta.29
 ARG TARGETARCH
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
