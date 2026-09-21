@@ -136,6 +136,8 @@ go run ./version -addr http://localhost:9377
 
 ## Environment Variables
 
+Full list of available settings is in [params.md](params.md). The essentials:
+
 ### General
 
 | Variable             | Default | Description                   |
