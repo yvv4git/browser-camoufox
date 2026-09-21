@@ -1,120 +1,119 @@
-# Параметры среды (Environment Variables)
+# Environment Variables
 
-Все переменные задаются в `.env` и пробрасываются в контейнер через
-`docker-compose.yaml`. После изменения необходимо перезапустить контейнер:
+All variables are set in `.env` and passed into the container via
+`docker-compose.yaml`. Restart the container after changes:
 
 ```bash
 docker compose down && docker compose up -d
 ```
 
-## Сервер и безопасность
+## Server and Security
 
-| Переменная                       | Значение по умолчанию | Описание                                                              |
-| -------------------------------- | --------------------- | --------------------------------------------------------------------- |
-| `CAMOFOX_PORT`                   | `9377`                | Порт HTTP API сервера                                                 |
-| `PORT`                           | `9377`                | Фолбэк для порта (Fly.io, Railway и т.п.)                             |
-| `CAMOFOX_BIND_HOST`              | -                     | Хост биндинга: `127.0.0.1` (только localhost), `0.0.0.0` (все IPv4)   |
-| `NODE_ENV`                       | `development`         | Среда запуска (`production` для скрытия деталей ошибок)               |
-| `CAMOFOX_API_KEY`                | -                     | Ключ для endpoint импорта cookies (`POST /sessions/:userId/cookies`)  |
-| `CAMOFOX_ADMIN_KEY`              | -                     | Ключ для `POST /stop`                                                 |
-| `CAMOFOX_ACCESS_KEY`             | -                     | Bearer-токен на все маршруты, кроме `/health`                         |
-| `CAMOFOX_EVALUATE_MAX_BODY_SIZE` | `1mb`                 | Макс. размер тела JSON для `POST /tabs/:tabId/evaluate`               |
-| `MAX_OLD_SPACE_SIZE`             | `128`                 | Лимит V8-кучи Node.js, МБ                                             |
+| Variable                         | Default               | Description                                                        |
+| -------------------------------- | --------------------- | ------------------------------------------------------------------ |
+| `CAMOFOX_PORT`                   | `9377`                | HTTP API server port                                               |
+| `PORT`                           | `9377`                | Port fallback (Fly.io, Railway, etc.)                              |
+| `CAMOFOX_BIND_HOST`              | -                     | Bind host: `127.0.0.1` (loopback only), `0.0.0.0` (all IPv4)       |
+| `NODE_ENV`                       | `development`         | Run environment (`production` hides error details)                 |
+| `CAMOFOX_API_KEY`                | -                     | Key for cookie import endpoint (`POST /sessions/:userId/cookies`)  |
+| `CAMOFOX_ADMIN_KEY`              | -                     | Key for `POST /stop`                                               |
+| `CAMOFOX_ACCESS_KEY`             | -                     | Bearer token for all routes except `/health`                       |
+| `CAMOFOX_EVALUATE_MAX_BODY_SIZE` | `1mb`                 | Max JSON body size for `POST /tabs/:tabId/evaluate`                |
+| `MAX_OLD_SPACE_SIZE`             | `128`                 | Node.js V8 heap limit, MB                                          |
 
 ## VNC
 
-| Переменная        | Значение по умолчанию | Описание                                      |
-| ----------------- | --------------------- | --------------------------------------------- |
-| `ENABLE_VNC`      | `0`                   | Включить VNC (`1` включить, `0` выключить)    |
-| `VNC_PASSWORD`    | -                     | Пароль для доступа к VNC                      |
-| `VNC_PORT`        | -                     | Порт самого VNC-сервера                       |
-| `NOVNC_PORT`      | `6080`                | Порт веб-интерфейса noVNC                     |
-| `VNC_BIND`        | -                     | Адрес биндинга VNC (например `0.0.0.0`)       |
-| `VNC_RESOLUTION`  | -                     | Разрешение экрана (например `1920x1080`)      |
-| `VIEW_ONLY`       | -                     | Только просмотр, без возможности ввода        |
+| Variable         | Default | Description                              |
+| ---------------- | ------- | ---------------------------------------- |
+| `ENABLE_VNC`     | `0`     | Enable VNC (`1` enable, `0` disable)     |
+| `VNC_PASSWORD`   | -       | VNC access password                      |
+| `VNC_PORT`       | -       | VNC server port                          |
+| `NOVNC_PORT`     | `6080`  | noVNC web UI port                        |
+| `VNC_BIND`       | -       | VNC bind address (e.g. `0.0.0.0`)        |
+| `VNC_RESOLUTION` | -       | Screen resolution (e.g. `1920x1080`)     |
+| `VIEW_ONLY`      | -       | View-only mode, no input allowed         |
 
 ## Proxy
 
-Схема прокси всегда `http`. Прокси не применяется, если `PROXY_HOST` пуст.
+Proxy scheme is always `http`. Proxy is disabled when `PROXY_HOST` is empty.
 
-| Переменная                       | Значение по умолчанию | Описание                                                               |
-| -------------------------------- | --------------------- | ---------------------------------------------------------------------- |
-| `PROXY_HOST`                     | -                     | Хост или IP прокси (простой режим)                                     |
-| `PROXY_PORT`                     | -                     | Порт прокси (простой режим)                                            |
-| `PROXY_PORTS`                    | -                     | Список портов `"10001,10002"` или диапазон `"10001-10010"`             |
-| `PROXY_USERNAME`                 | -                     | Логин для авторизации на прокси                                        |
-| `PROXY_PASSWORD`                 | -                     | Пароль для авторизации на прокси                                       |
-| `PROXY_STRATEGY`                 | `round_robin`         | Режим: `backconnect` (ротация sticky-сессий) или пусто (один endpoint) |
-| `PROXY_PROVIDER`                 | `decodo`              | Провайдер: `decodo` или `generic`                                      |
-| `PROXY_BACKCONNECT_HOST`         | -                     | Хост backconnect-шлюза                                                 |
-| `PROXY_BACKCONNECT_PORT`         | `7000`                | Порт backconnect-шлюза                                                 |
-| `PROXY_COUNTRY`                  | -                     | Страна для гео-таргетинга выхода                                       |
-| `PROXY_STATE`                    | -                     | Регион/штат для гео-таргетинга                                         |
-| `PROXY_CITY`                     | -                     | Город для гео-таргетинга                                               |
-| `PROXY_ZIP`                      | -                     | Почтовый индекс для гео-таргетинга                                     |
-| `PROXY_SESSION_DURATION_MINUTES` | `10`                  | Длительность sticky-сессии, минут                                      |
+| Variable                         | Default       | Description                                              |
+| -------------------------------- | ------------- | -------------------------------------------------------- |
+| `PROXY_HOST`                     | -             | Proxy hostname or IP (simple mode)                       |
+| `PROXY_PORT`                     | -             | Proxy port (simple mode)                                 |
+| `PROXY_PORTS`                    | -             | Port list `"10001,10002"` or range `"10001-10010"`       |
+| `PROXY_USERNAME`                 | -             | Proxy auth username                                      |
+| `PROXY_PASSWORD`                 | -             | Proxy auth password                                      |
+| `PROXY_STRATEGY`                 | `round_robin` | Mode: `backconnect` (rotating sessions) or empty         |
+| `PROXY_PROVIDER`                 | `decodo`      | Provider: `decodo` or `generic`                          |
+| `PROXY_BACKCONNECT_HOST`         | -             | Backconnect gateway hostname                             |
+| `PROXY_BACKCONNECT_PORT`         | `7000`        | Backconnect gateway port                                 |
+| `PROXY_COUNTRY`                  | -             | Geo-targeting country                                    |
+| `PROXY_STATE`                    | -             | Geo-targeting state/region                               |
+| `PROXY_CITY`                     | -             | Geo-targeting city                                       |
+| `PROXY_ZIP`                      | -             | Geo-targeting postal code                                |
+| `PROXY_SESSION_DURATION_MINUTES` | `10`          | Sticky session duration, minutes                         |
 
-При настройке прокси locale, timezone и геолокация браузера
-автоматически берутся из IP прокси. Без прокси — `en-US`,
-`America/Los_Angeles`, Сан-Франциско.
+With a proxy configured, browser locale, timezone, and geolocation are
+derived from the proxy IP automatically. Without a proxy, defaults are
+`en-US`, `America/Los_Angeles`, San Francisco.
 
-## Лимиты сессий и вкладок
+## Session and Tab Limits
 
-| Переменная                         | Значение по умолчанию | Описание                                              |
-| ---------------------------------- | --------------------- | ----------------------------------------------------- |
-| `MAX_SESSIONS`                     | `50`                  | Макс. число одновременных сессий                      |
-| `MAX_TABS_PER_SESSION`             | `10`                  | Макс. вкладок в сессии                                |
-| `MAX_TABS_GLOBAL`                  | `50`                  | Макс. вкладок всего                                   |
-| `MAX_CONCURRENT_PER_USER`          | `3`                   | Макс. параллельных запросов одного пользователя       |
-| `SESSION_TIMEOUT_MS`               | `1800000`             | Таймаут неактивной сессии (30 мин)                    |
-| `TAB_INACTIVITY_MS`                | `300000`              | Закрывать вкладку, простаивающую дольше этого (5 мин) |
-| `BROWSER_IDLE_TIMEOUT_MS`          | `300000`              | Убивать браузер при простое (0 = никогда)             |
-| `HANDLER_TIMEOUT_MS`               | `30000`               | Макс. время любого обработчика (30 c)                 |
-| `NAVIGATE_TIMEOUT_MS`              | `25000`               | Таймаут навигации (25 c)                              |
-| `BUILDREFS_TIMEOUT_MS`             | `12000`               | Таймаут построения snapshot-рефов (12 c)              |
-| `NATIVE_MEM_RESTART_THRESHOLD_MB`  | `300`                 | Порог перезапуска браузера по нативной памяти         |
-| `BROWSER_RSS_RESTART_THRESHOLD_MB` | `1500`                | Порог перезапуска браузера по RSS                     |
+| Variable                           | Default   | Description                                            |
+| ---------------------------------- | --------- | ------------------------------------------------------ |
+| `MAX_SESSIONS`                     | `50`      | Max concurrent sessions                                |
+| `MAX_TABS_PER_SESSION`             | `10`      | Max tabs per session                                   |
+| `MAX_TABS_GLOBAL`                  | `50`      | Max tabs in total                                      |
+| `MAX_CONCURRENT_PER_USER`          | `3`       | Max concurrent requests per user                       |
+| `SESSION_TIMEOUT_MS`               | `1800000` | Inactive session timeout (30 min)                      |
+| `TAB_INACTIVITY_MS`                | `300000`  | Close tabs idle longer than this (5 min)               |
+| `BROWSER_IDLE_TIMEOUT_MS`          | `300000`  | Kill browser when idle (0 = never)                     |
+| `HANDLER_TIMEOUT_MS`               | `30000`   | Max time for any handler (30 s)                        |
+| `NAVIGATE_TIMEOUT_MS`              | `25000`   | Navigation timeout (25 s)                              |
+| `BUILDREFS_TIMEOUT_MS`             | `12000`   | Snapshot refs build timeout (12 s)                     |
+| `NATIVE_MEM_RESTART_THRESHOLD_MB`  | `300`     | Browser restart threshold by native memory             |
+| `BROWSER_RSS_RESTART_THRESHOLD_MB` | `1500`    | Browser restart threshold by RSS                       |
 
-## Каталоги хранения
+## Storage Directories
 
-Полезно выносить в тома (`volumes`) для сохранения состояния между
-пересозданиями контейнера.
+Useful to mount as volumes to persist state across container recreation.
 
-| Переменная                    | Значение по умолчанию | Описание                                                     |
-| ----------------------------- | --------------------- | ------------------------------------------------------------ |
-| `CAMOFOX_COOKIES_DIR`         | `~/.camofox/cookies`  | Каталог файлов cookies                                       |
-| `CAMOFOX_UPLOADS_DIR`         | `~/.camofox/uploads`  | Каталог для загрузки файлов                                  |
-| `CAMOFOX_PROFILE_DIR`         | `~/.camofox/profiles` | Каталог сохранения сессий                                    |
-| `CAMOFOX_TRACES_DIR`          | `~/.camofox/traces`   | Каталог trace-архивов (zip)                                  |
-| `CAMOFOX_TRACES_MAX_BYTES`    | `52428800` (50 МБ)    | Макс. размер одного trace, файлы больше удаляются при старте |
-| `CAMOFOX_TRACES_TTL_HOURS`    | `24`                  | Возраст trace (часы), старше — удаляются при старте          |
+| Variable                     | Default               | Description                                        |
+| ---------------------------- | --------------------- | -------------------------------------------------- |
+| `CAMOFOX_COOKIES_DIR`        | `~/.camofox/cookies`  | Directory for cookie files                         |
+| `CAMOFOX_UPLOADS_DIR`        | `~/.camofox/uploads`  | Directory for file uploads                         |
+| `CAMOFOX_PROFILE_DIR`        | `~/.camofox/profiles` | Directory for persisted sessions                   |
+| `CAMOFOX_TRACES_DIR`         | `~/.camofox/traces`   | Directory for trace archives (zip)                 |
+| `CAMOFOX_TRACES_MAX_BYTES`   | `52428800` (50 MB)    | Max trace size, larger files removed on startup    |
+| `CAMOFOX_TRACES_TTL_HOURS`   | `24`                  | Trace age (hours), older ones swept on startup     |
 
-## Поведение
+## Behavior
 
-| Переменная                       | Значение по умолчанию | Описание                                                                                                             |
-| -------------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `CAMOFOX_INTERACTIVE`            | `off`                 | Режим: `desktop` (видимое окно), `novnc`, `off`                                                                      |
-| `CAMOFOX_DISABLE_DEFAULT_ADDONS` | `0`                   | `1`/`true` — не грузить дефолтный uBlock Origin (UBO)                                                                |
-| `PROMETHEUS_ENABLED`             | -                     | `1`/`true` — включить метрики Prometheus                                                                             |
-| `CAMOUFOX_EXECUTABLE`            | -                     | Путь к внешнему исполняемому файлу Camoufox (с братьями по бандлу: `properties.json`, `version.json`, `fontconfig/`) |
-| `CAMOUFOX_EXECUTABLE_PATH`       | -                     | Алиас для `CAMOUFOX_EXECUTABLE`                                                                                      |
-| `CAMOFOX_EXECUTABLE_PATH`        | -                     | Алиас для `CAMOUFOX_EXECUTABLE`                                                                                      |
+| Variable                          | Default | Description                                                                                              |
+| --------------------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
+| `CAMOFOX_INTERACTIVE`             | `off`   | Mode: `desktop` (visible window), `novnc`, `off`                                                         |
+| `CAMOFOX_DISABLE_DEFAULT_ADDONS`  | `0`     | `1`/`true` — skip default uBlock Origin (UBO) addon                                                      |
+| `PROMETHEUS_ENABLED`              | -       | `1`/`true` — enable Prometheus metrics                                                                   |
+| `CAMOUFOX_EXECUTABLE`             | -       | Path to external Camoufox executable (bundle siblings: `properties.json`, `version.json`, `fontconfig/`) |
+| `CAMOUFOX_EXECUTABLE_PATH`        | -       | Compat alias for `CAMOUFOX_EXECUTABLE`                                                                   |
+| `CAMOFOX_EXECUTABLE_PATH`         | -       | Compat alias for `CAMOUFOX_EXECUTABLE`                                                                   |
 
-## Телеметрия
+## Telemetry
 
-| Переменная                        | Значение по умолчанию    | Описание                                        |
-| --------------------------------- | ------------------------ | ----------------------------------------------- |
-| `CAMOFOX_CRASH_REPORT_ENABLED`    | `true`                   | `false` — отключить анонимную телеметрию крашей |
-| `CAMOFOX_CRASH_REPORT_URL`        | (Cloudflare Worker)      | Свой endpoint телеметрии                        |
-| `CAMOFOX_CRASH_REPORT_REPO`       | `jo-inc/camofox-browser` | Репозиторий для issues телеметрии               |
-| `CAMOFOX_CRASH_REPORT_RATE_LIMIT` | `10`                     | Лимит отчётов в час                             |
-| `SENTRY_DSN`                      | -                        | DSN для отправки ошибок в Sentry                |
+| Variable                          | Default                    | Description                                |
+| --------------------------------- | -------------------------- | ------------------------------------------ |
+| `CAMOFOX_CRASH_REPORT_ENABLED`    | `true`                     | `false` disables anonymous crash telemetry |
+| `CAMOFOX_CRASH_REPORT_URL`        | (Cloudflare Worker)        | Custom telemetry endpoint                  |
+| `CAMOFOX_CRASH_REPORT_REPO`       | `jo-inc/camofox-browser`   | Repo for telemetry issues                  |
+| `CAMOFOX_CRASH_REPORT_RATE_LIMIT` | `10`                       | Reports per hour limit                     |
+| `SENTRY_DSN`                      | -                          | DSN to send errors to Sentry               |
 
-## Internal (обычно не требуется)
+## Internal (usually not required)
 
-| Переменная         | Значение по умолчанию | Описание                                          |
-| ------------------ | --------------------- | ------------------------------------------------- |
-| `FLY_MACHINE_ID`   | -                     | ID машины Fly.io (горизонтальное масштабирование) |
-| `FLY_APP_NAME`     | -                     | Имя приложения Fly.io                             |
-| `FLY_API_TOKEN`    | -                     | Токен API Fly.io                                  |
-| `XDG_CACHE_HOME`   | `~/.cache`            | Каталог кеша (`<…>/camoufox` для бинаря браузера) |
+| Variable           | Default     | Description                                            |
+| ------------------ | ----------- | ------------------------------------------------------ |
+| `FLY_MACHINE_ID`   | -           | Fly.io machine ID (horizontal scaling)                 |
+| `FLY_APP_NAME`     | -           | Fly.io app name                                        |
+| `FLY_API_TOKEN`    | -           | Fly.io API token                                       |
+| `XDG_CACHE_HOME`   | `~/.cache`  | Cache directory (`<...>/camoufox` for browser binary)  |
